@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audira Download Manager (ADM) | Kernel Multi-Koneksi 32 Segmen &amp; AI Media Downloader</title>
+  <meta name="description" content="Audira Download Manager adalah platform akselerasi unduhan berkas berkinerja tinggi berbasis kernel Rust, pre-alokasi sparse file NTFS/ext4, ekstraksi video 8K HDR, dan model hub AI terintegrasi.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/styles.css?v=2.2.0">
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="top-banner">
+    <div class="top-banner-inner">
+      <span class="top-banner-badge">RELEASE v1.1.7</span>
+      <span data-i18n="bannerText">Rilis Resmi: Audira Download Manager v1.1.7 dengan akselerasi 32-koneksi paralel dan verifikasi SHA-256.</span>
+      <a href="#downloads" class="top-banner-link">
+        <span data-i18n="bannerLink">Unduh Installer</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Sticky Header Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo" title="Audira Download Manager Home">
+        <img src="images/logo.svg" width="30" height="30" alt="Audira ADM Logo" style="border-radius:7px; flex-shrink:0;">
+        <span>AUDIRA<span class="brand-accent">DOWNLOAD</span></span>
+        <span class="brand-sub">ADM PRO</span>
+      </a>
+
+      <nav class="site-nav">
+        <ul class="nav-links">
+          <!-- 1. Product Dropdown -->
+          <li class="nav-item-dropdown">
+            <button class="nav-link nav-dropdown-btn" type="button" aria-haspopup="true" aria-expanded="false">
+              <span data-i18n="navFeatures">Fitur Arsitektur</span>
+              <svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="nav-dropdown-menu">
+              <div class="dropdown-menu-inner">
+                <a href="#features" class="dropdown-item">
+                  <div class="dropdown-item-icon" style="color:var(--color-primary);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                  </div>
+                  <div class="dropdown-item-content">
+                    <div class="dropdown-item-title">Work-Stealing 32-Segmen</div>
+                    <div class="dropdown-item-desc">Pembagian beban paralel dinamis hingga byte terakhir</div>
+                  </div>
+                </a>
+
+                <a href="#features" class="dropdown-item">
+                  <div class="dropdown-item-icon" style="color:#10b981;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  </div>
+                  <div class="dropdown-item-content">
+                    <div class="dropdown-item-title">Zero-Copy Sparse Pre-Allocation</div>
+                    <div class="dropdown-item-desc">Penulisan langsung tanpa fase merging sementara</div>
+                  </div>
+                </a>
+
+                <a href="#simulator" class="dropdown-item">
+                  <div class="dropdown-item-icon" style="color:#f59e0b;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </div>
+                  <div class="dropdown-item-content">
+                    <div class="dropdown-item-title">Simulasi Kernel Real-Time</div>
+                    <div class="dropdown-item-desc">Visualisasi live pemecahan chunk &amp; alokasi thread</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <!-- 2. Direct Links -->
+          <li><a href="#comparison" class="nav-link" data-i18n="navComparison">Matriks Perbandingan</a></li>
+          <li><a href="#pricing" class="nav-link" data-i18n="navPricing">Paket Lisensi</a></li>
+          <li><a href="#checker" class="nav-link" data-i18n="navChecker">Cek Serial Key</a></li>
+          <li><a href="#downloads" class="nav-link" data-i18n="navDownloads">Unduhan</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Language Switcher -->
+        <button id="langToggle" class="lang-btn" title="Toggle Language" aria-label="Toggle Language">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span id="langLabel">ID</span>
+        </button>
+
+        <!-- Theme Switcher (OLED Dark / Swiss Monochrome) -->
+        <button id="themeToggle" class="icon-btn" title="Toggle Visual Mode" aria-label="Toggle Visual Mode">
+          <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+
+        <!-- Fleet Admin Console Link -->
+        <a href="admin.html" class="btn btn-secondary btn-sm" title="Fleet &amp; License Admin Console">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span data-i18n="navConsoleLogin">Portal Fleet</span>
+        </a>
+
+        <!-- Primary CTA: Direct Download Button -->
+        <a href="#downloads" class="btn btn-primary btn-sm" title="Download Audira Download Manager">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          <span data-i18n="btnDownloads">Unduh Klien</span>
+        </a>
+
+        <!-- Mobile Nav Toggle Hamburger -->
+        <button id="mobileNavToggle" class="mobile-nav-toggle" aria-label="Menu" title="Toggle Navigation">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileNavDrawer" class="mobile-nav-drawer">
+      <div class="mobile-drawer-group-title">Produk &amp; Arsitektur</div>
+      <a href="#features" class="mobile-drawer-link" onclick="closeMobileDrawer()">Fitur Kernel</a>
+      <a href="#simulator" class="mobile-drawer-link" onclick="closeMobileDrawer()">Simulasi 32-Segmen</a>
+      <a href="#comparison" class="mobile-drawer-link" onclick="closeMobileDrawer()">Matriks Perbandingan</a>
+
+      <div class="mobile-drawer-group-title">Lisensi &amp; Validasi</div>
+      <a href="#pricing" class="mobile-drawer-link" onclick="closeMobileDrawer()">Paket Lisensi PRO</a>
+      <a href="#checker" class="mobile-drawer-link" onclick="closeMobileDrawer()">Cek Serial Key</a>
+      <a href="admin.html" class="mobile-drawer-link" onclick="closeMobileDrawer()">Portal Fleet Admin</a>
+
+      <div class="mobile-drawer-group-title">Unduhan</div>
+      <a href="#downloads" class="mobile-drawer-link" onclick="closeMobileDrawer()">Biner Windows, macOS, Linux</a>
+      <a href="#faq" class="mobile-drawer-link" onclick="closeMobileDrawer()">Knowledge Base</a>
+    </div>
+  </header>
+
+  <!-- Hero Section: Split 2-Column (Left: Text & Metrics, Right: Interactive Architecture Stage) -->
+  <section class="hero-section">
+    <div class="container hero-split-container">
+      <!-- Left Column: Copywriting & CTA -->
+      <div class="hero-left-column">
+        <div class="hero-badge-wrap">
+          <span class="hero-badge-dot"></span>
+          <span data-i18n="heroBadge">Kernel Rust Mutakhir • 32 Segmen Simultan • Zero-Copy Sparse NTFS/ext4</span>
+        </div>
+
+        <h1 class="hero-title" data-i18n="heroTitle">
+          Akselerasi Download Turbo. <span>Nir-Jeda Merging.</span>
+        </h1>
+
+        <p class="hero-subtitle" data-i18n="heroSubtitle">
+          Arsitektur pengunduh berkas multi-segmen berkinerja tinggi berbasis Rust &amp; Tauri 2. Mengakselerasi kecepatan hingga 15× lipat, tahan crash dan pemadaman listrik, ekstraksi video 8K HDR, serta integrasi AI Hub Hugging Face.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#downloads" class="btn btn-primary btn-lg" style="display:inline-flex; align-items:center; gap:0.55rem; text-decoration:none;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            <span data-i18n="btnHeroWin">Unduh untuk Windows (23.4 MB)</span>
+          </a>
+
+          <a href="https://wa.me/6282112001600?text=Halo%20AUDIRA,%20saya%20ingin%20membeli%20Lisensi%20Audira%20Download%20Manager%20PRO%20Lifetime%20(Rp%2099.000)" target="_blank" rel="noopener" class="btn btn-secondary btn-lg" style="border-color:rgba(245, 158, 11, 0.4); color:var(--color-amber);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span data-i18n="btnHeroPro">Beli Lisensi PRO Lifetime (Rp 99.000)</span>
+          </a>
+        </div>
+
+        <div class="hero-specs-row">
+          <div class="spec-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Zero-Copy Pre-Allocation (0s Merge)</span>
+          </div>
+          <div class="spec-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>SQLite WAL Crash Resilience</span>
+          </div>
+          <div class="spec-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>HMAC-SHA256 Machine HWID Binding</span>
+          </div>
+        </div>
+
+        <!-- Metric Stat Cards -->
+        <div class="hero-stats-strip">
+          <div class="hero-stat-card">
+            <div class="hero-stat-val" data-i18n="statConnVal">32 Koneksi</div>
+            <div class="hero-stat-label" data-i18n="statConnLbl">Paralel Multi-Thread Turbo</div>
+          </div>
+          <div class="hero-stat-card">
+            <div class="hero-stat-val" style="color:var(--color-emerald);" data-i18n="statSpeedVal">60.9 MB/s</div>
+            <div class="hero-stat-label" data-i18n="statSpeedLbl">Throughput Rill Terverifikasi</div>
+          </div>
+          <div class="hero-stat-card">
+            <div class="hero-stat-val" data-i18n="statEngineVal">100% Rust</div>
+            <div class="hero-stat-label" data-i18n="statEngineLbl">Memory-Safe tokio &amp; reqwest</div>
+          </div>
+          <div class="hero-stat-card">
+            <div class="hero-stat-val" data-i18n="statMergeVal">0 Detik</div>
+            <div class="hero-stat-label" data-i18n="statMergeLbl">Zero-Copy Sparse Pre-Allocation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive 32-Segment Simulator Stage Preview -->
+      <div class="hero-right-column">
+        <div class="hero-3d-stage">
+          <div class="hero-3d-badge-bar">
+            <div class="stage-tag">
+              <span class="live-dot"></span>
+              <span>KERNEL ENGINE HUD</span>
+            </div>
+            <div class="stage-hint">
+              <span style="font-family:var(--font-mono); font-size:11px; color:#10b981;">32/32 Turbo Workers Active</span>
+            </div>
+          </div>
+
+          <!-- Active Task Card Inside Stage -->
+          <div style="position:absolute; inset:56px 20px 20px 20px; display:flex; flex-direction:column; justify-content:space-between; background:rgba(18, 23, 34, 0.85); border:1px solid var(--color-border); border-radius:12px; padding:20px; backdrop-filter:blur(12px);">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:36px; height:36px; background:rgba(56, 189, 248, 0.12); border:1px solid var(--color-primary); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--color-primary);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                  </div>
+                  <div>
+                    <div style="font-weight:700; font-size:14px; color:var(--color-text-heading);">Ubuntu-24.04-Desktop-amd64.iso</div>
+                    <div style="font-size:11px; font-family:var(--font-mono); color:var(--color-text-dim);">Size: 2.68 GB • HTTPS Range Supported</div>
+                  </div>
+                </div>
+                <span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:var(--color-emerald); background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:4px 8px; border-radius:6px;">61.4 MB/s</span>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; font-size:12px; font-family:var(--font-mono); margin-bottom:6px; color:var(--color-text-muted);">
+                <span>Throughput: <b style="color:var(--color-text-heading);">61.4 MB/s</b> (Peak: 64.2 MB/s)</span>
+                <span>Progress: <b style="color:var(--color-primary);">78.4%</b></span>
+              </div>
+
+              <div style="height:10px; background:rgba(255,255,255,0.06); border-radius:5px; overflow:hidden; margin-bottom:16px;">
+                <div style="height:100%; width:78.4%; background:linear-gradient(90deg, var(--color-primary), var(--color-emerald)); border-radius:5px;"></div>
+              </div>
+
+              <div style="font-size:11px; font-family:var(--font-mono); color:var(--color-text-dim); margin-bottom:6px;">
+                Thread Spectrum (32 Slices):
+              </div>
+              <div style="display:flex; gap:3px; height:20px; align-items:flex-end; background:rgba(0,0,0,0.3); padding:4px; border-radius:6px;">
+                <span style="flex:1; height:85%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:92%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:74%; background:#38bdf8; border-radius:1px;"></span>
+                <span style="flex:1; height:100%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:68%; background:#38bdf8; border-radius:1px;"></span>
+                <span style="flex:1; height:90%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:80%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:95%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:70%; background:#38bdf8; border-radius:1px;"></span>
+                <span style="flex:1; height:88%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:76%; background:#38bdf8; border-radius:1px;"></span>
+                <span style="flex:1; height:100%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:82%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:91%; background:#10b981; border-radius:1px;"></span>
+                <span style="flex:1; height:65%; background:#38bdf8; border-radius:1px;"></span>
+                <span style="flex:1; height:94%; background:#10b981; border-radius:1px;"></span>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; border-top:1px solid var(--color-border); padding-top:12px; margin-top:8px;">
+              <span style="color:var(--color-text-dim);">Alloc: <b>NTFS Sparse (0s Merge)</b></span>
+              <span style="color:var(--color-emerald); font-weight:600;">✔ Integrity Check Bit-Perfect</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Telemetry Simulator Below Hero Split -->
+    <div class="container hero-telemetry-container" id="simulator" style="margin-top:2.5rem;">
+      <div class="simulator-container">
+        <div class="sim-titlebar">
+          <div class="sim-title">
+            <span class="sim-terminal-prompt">adm-kernel@rust:~$</span>
+            <span>dispatch --file Ubuntu-24.04-Desktop-amd64.iso --threads 32 --sparse</span>
+          </div>
+          <div class="sim-network-pill">
+            <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#10b981;box-shadow:0 0 6px #10b981;"></span>
+            <span>32/32 Turbo Workers Active</span>
+          </div>
+        </div>
+
+        <!-- Live Telemetry Strip -->
+        <div class="sim-telemetry-strip">
+          <div class="telemetry-node">
+            <span class="label">Total Throughput:</span>
+            <span class="val emerald" id="simSpeedVal">61.4 MB/s</span>
+          </div>
+          <div class="telemetry-node">
+            <span class="label">Progress:</span>
+            <span class="val" id="simPercent">0.0%</span>
+          </div>
+          <div class="telemetry-node">
+            <span class="label">Sisa Waktu (ETA):</span>
+            <span class="val" id="simEtaVal">43s</span>
+          </div>
+          <div class="telemetry-node">
+            <span class="label">Alokasi Berkas:</span>
+            <span class="val emerald">NTFS Sparse (0s Merge)</span>
+          </div>
+        </div>
+
+        <!-- Simulator Body -->
+        <div style="padding: 1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:13px; font-weight:600;">
+            <span>Berkas: <b>Ubuntu-24.04-Desktop-amd64.iso</b> (2.68 GB)</span>
+            <span id="simDownloadedMb" style="color:var(--color-primary); font-family:var(--font-mono);">0.0 MB / 2680 MB</span>
+          </div>
+
+          <!-- Overall Progress Bar -->
+          <div style="height:12px; background:rgba(255,255,255,0.06); border-radius:6px; overflow:hidden; margin-bottom:14px;">
+            <div id="simOverallBar" style="height:100%; width:0%; background:linear-gradient(90deg, var(--color-primary), var(--color-emerald)); transition: width 0.15s ease;"></div>
+          </div>
+
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--color-text-dim); margin-bottom:6px; font-family:var(--font-mono); display:flex; justify-content:space-between;">
+            <span>Visualisasi 32 Thread Worker (Dynamic Work-Stealing)</span>
+            <span id="simSparseNotice" style="display:none; color:var(--color-emerald); font-weight:700;">✔ SELESAI INSTAN TANPA MERGING!</span>
+          </div>
+
+          <!-- 32 Cells Grid -->
+          <div class="segments-grid" id="segmentsGrid"></div>
+
+          <!-- Sparse NTFS block row -->
+          <div style="font-size:11px; color:var(--color-text-dim); font-family:var(--font-mono); margin-top:10px;">
+            OS Sparse File Blocks on Disk:
+          </div>
+          <div class="sparse-block-row" id="sparseBlocksRow"></div>
+
+          <!-- Simulation Action Buttons -->
+          <div style="display:flex; gap:10px; margin-top:16px;">
+            <button class="btn btn-secondary btn-sm" id="simPauseBtn" onclick="toggleSimPause()">Jeda</button>
+            <button class="btn btn-secondary btn-sm" onclick="restartSim()">Ulangi Simulasi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Architecture Bento Section -->
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-tag" data-i18n="tagFeatures">Rekayasa Performa</div>
+      <h2 class="section-title" data-i18n="titleFeatures">Arsitektur Kernel Tingkat Rendah</h2>
+      <p class="section-desc" data-i18n="descFeatures">
+        Diciptakan untuk memeras seluruh kapasitas bandwidth ISP tanpa membebani CPU, RAM, atau umur SSD.
+      </p>
+
+      <!-- Two Halves Architecture -->
+      <div class="two-halves-container">
+        <!-- Kernel Half -->
+        <div class="two-halves-card">
+          <div class="two-halves-badge">KERNEL ENGINE &bull; RUST BACKEND</div>
+          <h3 class="two-halves-title">prism-core Multi-Thread Daemon</h3>
+          <p class="two-halves-desc">
+            Berjalan sebagai daemon berkinerja tinggi menggunakan tokio async executor dan reqwest HTTP connection pooling. Mengatur pembagian segmen, streaming chunk, dan checkpointing database SQLite WAL.
+          </p>
+          <ul class="two-halves-features">
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Dynamic Work-Stealing hingga 32 koneksi simultan
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Zero-copy sparse write langsung ke offset disk
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Resiliensi crash &amp; pemadaman listrik via SQLite WAL
+            </li>
+          </ul>
+        </div>
+
+        <!-- Native Messaging Connector -->
+        <div class="two-halves-connector">
+          <span class="two-halves-connector-pill">Native Messaging IPC</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--color-primary);"><path d="M7 16V4M7 4L3 8M7 4L11 8M17 8V20M17 20L21 16M17 20L13 16"/></svg>
+          <span style="font-size:0.7rem; font-family:var(--font-mono); color:var(--color-text-muted);">&lt; 1ms IPC</span>
+        </div>
+
+        <!-- UI Half -->
+        <div class="two-halves-card">
+          <div class="two-halves-badge" style="color:var(--color-emerald); background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3);">CLIENT INTERFACE &bull; TAURI 2 &amp; BROWSER</div>
+          <h3 class="two-halves-title">Antarmuka Desktop &amp; Ekstensi Browser</h3>
+          <p class="two-halves-desc">
+            Frontend modern berbasis Tauri 2 dan React dengan integrasi ekstensi browser Chrome, Edge, dan Firefox. Mengambil alih unduhan browser secara otomatis tanpa perantara awan.
+          </p>
+          <ul class="two-halves-features">
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Tauri 2 lightweight desktop client (&lt; 25 MB RAM)
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Ekstensi browser Chrome Web Store &amp; Firefox Add-on
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Penangkap video streaming 8K HDR &amp; AI Model Hub
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bento Grid (Using col-8, col-4, col-6) -->
+      <div class="bento-grid">
+        <!-- Bento 1: Dynamic Work-Stealing -->
+        <div class="bento-card col-8">
+          <div class="bento-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3 class="bento-card-title" data-i18n="feat1Title">Dynamic Work-Stealing Multi-Connection</h3>
+          <p class="bento-card-desc" data-i18n="feat1Desc">
+            Membagi berkas menjadi 32 koneksi HTTP simultan. Ketika satu thread selesai lebih awal atau terhambat throttling server asal, thread tersebut otomatis membelah dua segmen terbesar yang tersisa sehingga seluruh 32 koneksi bekerja hingga byte terakhir.
+          </p>
+          <div class="bento-topology-graphic">
+            <div class="topo-row">
+              <span class="topo-label">Worker Pool State</span>
+              <span class="topo-val">32 Concurrent Threads (Max Bandwidth)</span>
+            </div>
+            <div class="topo-row">
+              <span class="topo-label">Bisecting Engine</span>
+              <span class="topo-val">Auto-Steal Sisa Byte Terbesar (Adaptive)</span>
+            </div>
+            <div class="topo-row">
+              <span class="topo-label">Chunk Boundary</span>
+              <span class="topo-val">HTTP Range Header Protocol (RFC 7233)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento 2: HWID Cryptography -->
+        <div class="bento-card col-4">
+          <div class="bento-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 class="bento-card-title">Otentikasi Kriptografi HWID</h3>
+          <p class="bento-card-desc">
+            Kunci lisensi diautentikasi menggunakan signature HMAC-SHA256 yang diikat secara permanen ke Hardware Machine ID.
+          </p>
+          <div class="bento-code-block">
+            Signature: ADM-LIFE-0-[HMAC16]
+          </div>
+        </div>
+
+        <!-- Bento 3: Zero-Copy Sparse -->
+        <div class="bento-card col-6">
+          <div class="bento-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 class="bento-card-title" data-i18n="feat2Title">Zero-Copy Sparse Pre-Allocation</h3>
+          <p class="bento-card-desc" data-i18n="feat2Desc">
+            Menghilangkan fase merging sementara yang lambat. ADM langsung memesan ruang disk melalui OS native API (FSCTL_SET_SPARSE pada Windows NTFS dan fallocate pada Linux ext4/btrfs). Data langsung ditulis persis ke offset byte tujuan.
+          </p>
+        </div>
+
+        <!-- Bento 4: SQLite WAL -->
+        <div class="bento-card col-6">
+          <div class="bento-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="bento-card-title" data-i18n="feat3Title">Resiliensi Pemadaman Listrik (SQLite WAL)</h3>
+          <p class="bento-card-desc" data-i18n="feat3Desc">
+            Setiap blok byte yang berhasil diverifikasi dicatat secara atomik ke basis data SQLite Write-Ahead Logging (WAL). Jika laptop mati mendadak atau koneksi terputus, unduhan dilanjutkan persis di byte terakhir tanpa korupsi data.
+          </p>
+        </div>
+
+        <!-- Bento 5: 8K Video Grabber -->
+        <div class="bento-card col-8">
+          <div class="bento-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          </div>
+          <h3 class="bento-card-title" data-i18n="feat4Title">8K HDR &amp; Audio Stream Grabber</h3>
+          <p class="bento-card-desc" data-i18n="feat4Desc">
+            Mendukung ekstraksi video dari 1.800+ portal (YouTube, TikTok, Bilibili) hingga resolusi 8K HDR 60fps dengan multiplexing audio-video lossless dan ekstraksi murni MP3 320kbps.
+          </p>
+        </div>
+
+        <!-- Bento 6: AI Model Downloader -->
+        <div class="bento-card col-4">
+          <div class="bento-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <h3 class="bento-card-title" data-i18n="feat5Title">Hugging Face AI Model Downloader</h3>
+          <p class="bento-card-desc" data-i18n="feat5Desc">
+            Pencarian dan pengunduhan bobot model LLM (GGUF, SafeTensors) langsung dari direktori aplikasi dengan verifikasi hash SHA-256 otomatis.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Matrix Table Section -->
+  <section id="comparison" class="comparison-section">
+    <div class="container">
+      <div class="section-tag" data-i18n="tagComparison">Matriks Perbandingan</div>
+      <h2 class="section-title" data-i18n="titleComparison">Perbandingan Rekayasa: ADM vs Solusi Konvensional</h2>
+      <p class="section-desc" data-i18n="descComparison">
+        Mengapa para profesional IT dan power users memilih Audira Download Manager dibanding pengunduh warisan.
+      </p>
+
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th style="width: 28%;">Parameter Kemampuan Teknis</th>
+              <th class="col-highlight" style="width: 24%;">Audira Download Manager (ADM) PRO</th>
+              <th style="width: 16%;">IDM (Internet Download Manager)</th>
+              <th style="width: 16%;">aria2c CLI</th>
+              <th style="width: 16%;">Chrome Browser Native</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Koneksi Paralel Simultan per Berkas</td>
+              <td class="col-highlight">Hingga 32 Segmen Turbo</td>
+              <td>Hingga 32 (sering ter-throttle)</td>
+              <td>Hingga 16 koneksi</td>
+              <td style="color:var(--color-rose);">1 Koneksi (Single-Thread)</td>
+            </tr>
+            <tr>
+              <td>Alokasi Berkas (File Pre-Allocation)</td>
+              <td class="col-highlight">Zero-Copy Sparse (FSCTL_SET_SPARSE)</td>
+              <td>File Sementara (Perlu Merging)</td>
+              <td>fallocate / prealloc</td>
+              <td>Streaming write</td>
+            </tr>
+            <tr>
+              <td>Waktu Merging Pasca-Unduh (File 10 GB)</td>
+              <td class="col-highlight" style="color:var(--color-emerald); font-weight:700;">0 Detik (Selesai Instan)</td>
+              <td style="color:var(--color-rose);">30 - 90 Detik (Menyita I/O SSD)</td>
+              <td>0 Detik</td>
+              <td>0 Detik</td>
+            </tr>
+            <tr>
+              <td>Dynamic Work-Stealing pada Server Lambat</td>
+              <td class="col-highlight" style="color:var(--color-emerald); font-weight:700;">Otomatis Membelah Chunk Aktif</td>
+              <td>Statis (Menunggu segmen lambat)</td>
+              <td>Terbatas pada start chunk</td>
+              <td style="color:var(--color-rose);">Tidak Ada</td>
+            </tr>
+            <tr>
+              <td>Penangkap Video Streaming 8K HDR</td>
+              <td class="col-highlight">1.800+ Situs + Ekstrak MP3 320k</td>
+              <td>Ya (Format Terbatas)</td>
+              <td style="color:var(--color-rose);">Tidak Ada</td>
+              <td style="color:var(--color-rose);">Tidak Ada</td>
+            </tr>
+            <tr>
+              <td>Hub AI Model Hugging Face (GGUF)</td>
+              <td class="col-highlight">Terintegrasi + Validasi SHA-256</td>
+              <td style="color:var(--color-rose);">Tidak Ada</td>
+              <td style="color:var(--color-rose);">Tidak Ada</td>
+              <td style="color:var(--color-rose);">Tidak Ada</td>
+            </tr>
+            <tr>
+              <td>Resiliensi Pemadaman Listrik &amp; Crash</td>
+              <td class="col-highlight">SQLite Write-Ahead Logging (WAL)</td>
+              <td>State File Partisi</td>
+              <td>File .aria2 Control</td>
+              <td style="color:var(--color-rose);">Sering Corrupt / Gagal Resume</td>
+            </tr>
+            <tr>
+              <td>Lisensi &amp; Kebijakan Privasi</td>
+              <td class="col-highlight" style="color:var(--color-amber);">Lisensi Lifetime Resmi / Bebas Iklan</td>
+              <td>Berbayar Tahunan / Nag Screen</td>
+              <td>Open-Source MIT</td>
+              <td>Gratis bawaan</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Plans Section -->
+  <section id="pricing" class="section" style="border-top:1px solid var(--color-border); background:var(--color-bg-subtle);">
+    <div class="container">
+      <div class="section-tag" data-i18n="tagPricing">Paket &amp; Lisensi Komersial</div>
+      <h2 class="section-title" data-i18n="titlePricing">Pilihan Lisensi Resmi AUDIRA</h2>
+      <p class="section-desc" data-i18n="descPricing">
+        Gunakan versi gratis untuk kebutuhan harian, atau tingkatkan ke Audira PRO untuk akselerasi 32-segmen tanpa kompromi.
+      </p>
+
+      <div class="pricing-grid">
+        <!-- Community Free -->
+        <div class="pricing-card">
+          <div class="pricing-card-badge">COMMUNITY STANDALONE</div>
+          <div class="pricing-tier-tag">COMMUNITY</div>
+          <h3 class="pricing-title">Community Edition</h3>
+          <p class="pricing-subtitle">Pengunduhan berkas umum tanpa biaya langganan.</p>
+          <div class="pricing-price-wrap">
+            <span class="pricing-currency">Rp</span>
+            <span class="pricing-amount">0</span>
+            <span class="pricing-period">/ bebas</span>
+          </div>
+          <div class="pricing-billing-note">Bebas Iklan &amp; Tanpa Batas Waktu</div>
+
+          <ul class="pricing-features-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Maksimal 6 koneksi simultan per berkas</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Resume unduhan terputus &amp; toleransi crash</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Penangkap video hingga 1080p Full HD</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Ekstensi browser Chrome, Edge &amp; Firefox</span>
+            </li>
+            <li class="dimmed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>Akselerasi 32 segmen paralel turbo</span>
+            </li>
+            <li class="dimmed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>Ekstraksi video 4K / 8K HDR &amp; MP3 320k</span>
+            </li>
+          </ul>
+
+          <div class="pricing-card-footer">
+            <a href="#downloads" class="btn btn-secondary" style="width:100%;">Unduh Edisi Gratis</a>
+          </div>
+        </div>
+
+        <!-- Pro Lifetime -->
+        <div class="pricing-card featured">
+          <div class="pricing-card-badge">REKOMENDASI UTAMA</div>
+          <div class="pricing-tier-tag" style="color:var(--color-amber);">AUDIIRA PRO</div>
+          <h3 class="pricing-title">Audira PRO Lifetime</h3>
+          <p class="pricing-subtitle">Lisensi komersial seumur hidup sekali bayar terikat HWID mesin.</p>
+          <div class="pricing-price-wrap">
+            <span class="pricing-currency" style="color:var(--color-amber);">Rp</span>
+            <span class="pricing-amount" style="color:var(--color-amber);">99.000</span>
+            <span class="pricing-period">/ 1x bayar</span>
+          </div>
+          <div class="pricing-billing-note" style="color:var(--color-amber);">Permanen Seumur Hidup + Update Gratis</div>
+
+          <ul class="pricing-features-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>32 Koneksi Paralel Simultan Turbo</strong></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Kecepatan Penuh Tanpa Batasan (Uncapped)</strong></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Video Grabber 4K &amp; 8K HDR 60fps + MP3 320k</strong></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>AI Hub Hugging Face Unlimited Download</strong></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Auto Sleep &amp; Shutdown PC Saat Download Tuntas</strong></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Kunci Lisensi Resmi Terikat HWID Mesin</strong></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Dukungan Prioritas VIP via WhatsApp Resmi</strong></span>
+            </li>
+          </ul>
+
+          <div class="pricing-card-footer">
+            <a href="https://wa.me/6282112001600?text=Halo%20AUDIRA,%20saya%20ingin%20membeli%20Lisensi%20Audira%20Download%20Manager%20PRO%20Lifetime%20(Rp%2099.000)" target="_blank" rel="noopener" class="btn btn-primary" style="width:100%; background:linear-gradient(135deg, #f59e0b, #d97706); border-color:#d97706; color:#000; font-weight:700;">
+              Beli Lisensi PRO via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Serial Key Verification Section -->
+  <section id="checker" class="section">
+    <div class="container">
+      <div class="section-tag" data-i18n="tagChecker">Validasi Lisensi</div>
+      <h2 class="section-title" data-i18n="titleChecker">Cek Keaslian &amp; Pengikatan HWID Serial Key</h2>
+      <p class="section-desc" data-i18n="descChecker">
+        Verifikasi status aktif, pemilik sah, dan masa berlaku lisensi langsung ke server otentikasi AUDIRA.
+      </p>
+
+      <div class="key-checker-card">
+        <form id="checkForm">
+          <div style="margin-bottom:1rem;">
+            <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Serial Key Lisensi:</label>
+            <input type="text" id="chkKey" class="sim-input" placeholder="ADM-LIFE-0-D31E0A5C2D90475E" required style="font-family:var(--font-mono); text-transform:uppercase; font-size:15px;">
+          </div>
+
+          <div class="checker-input-grid">
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Nama Pemilik Terdaftar:</label>
+              <input type="text" id="chkName" class="sim-input" placeholder="Agus Dwi Rianto" required>
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Email Pemilik Terdaftar:</label>
+              <input type="email" id="chkEmail" class="sim-input" placeholder="agusdwirianto@gmail.com" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="btnCheck" style="width:100%; justify-content:center; padding:12px;">Cek Status Lisensi</button>
+          <p style="font-size:12px; color:var(--color-text-dim); margin-top:0.75rem; font-family:var(--font-mono); text-align:center;">Kunci Demo Resmi: <a href="javascript:void(0)" style="color:var(--color-primary); text-decoration:underline; cursor:pointer;" onclick="document.getElementById('chkKey').value='ADM-LIFE-0-D31E0A5C2D90475E'; document.getElementById('chkName').value='Agus Dwi Rianto'; document.getElementById('chkEmail').value='agusdwirianto@gmail.com';">Isi Otomatis Kunci Founder (Agus Dwi Rianto)</a></p>
+        </form>
+
+        <div id="checkResult" style="display:none; margin-top:1.25rem; padding:1.25rem; border-radius:var(--radius-md);"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Platform Downloads Section -->
+  <section id="downloads" class="section" style="border-top:1px solid var(--color-border); background:var(--color-bg-subtle);">
+    <div class="container">
+      <div class="section-tag" data-i18n="tagDownloads">Berkas Instalasi Resmi</div>
+      <h2 class="section-title" data-i18n="titleDownloads">Unduh untuk Seluruh Platform</h2>
+      <p class="section-desc" data-i18n="descDownloads">
+        Biner mandiri yang aman, bebas malware, dan ditandatangani secara digital.
+      </p>
+
+      <div class="dl-bento-grid">
+        <div class="dl-row-top">
+          <!-- macOS -->
+          <div class="dl-card" data-os="macos">
+            <div>
+              <div class="dl-card-header">
+                <span class="dl-card-title">macOS Universal</span>
+                <span class="dl-version-pill">v1.1.7</span>
+              </div>
+              <p class="dl-card-subtitle">Apple Silicon (M1-M4) &bull; Intel x64</p>
+            </div>
+            <a href="https://github.com/audira/audira-download-manager/releases" target="_blank" rel="noopener" class="dl-action-btn dl-btn-dark">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              <span>Unduh .dmg</span>
+            </a>
+          </div>
+
+          <!-- Windows -->
+          <div class="dl-card is-user-system" data-os="windows">
+            <div>
+              <div class="dl-card-header">
+                <span class="dl-card-title">Windows 10 / 11</span>
+                <span class="dl-version-pill">v1.1.7</span>
+                <span class="dl-system-badge">Sistem Anda</span>
+              </div>
+              <p class="dl-card-subtitle">Installer Resmi &bull; x64 (MSI &amp; EXE)</p>
+            </div>
+            <a href="https://github.com/audira/audira-download-manager/releases" target="_blank" rel="noopener" class="dl-action-btn dl-btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              <span>Unduh Installer x64</span>
+            </a>
+          </div>
+
+          <!-- Linux -->
+          <div class="dl-card" data-os="linux">
+            <div>
+              <div class="dl-card-header">
+                <span class="dl-card-title">Linux Distros</span>
+                <span class="dl-version-pill">v1.1.7</span>
+              </div>
+              <p class="dl-card-subtitle">Ubuntu/Debian (.deb) &bull; AppImage Universal</p>
+            </div>
+            <a href="https://github.com/audira/audira-download-manager/releases" target="_blank" rel="noopener" class="dl-action-btn dl-btn-dark">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              <span>Unduh .deb / AppImage</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Browser Extension Card -->
+        <div class="dl-card dl-card-wide">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div>
+              <div class="dl-card-header">
+                <span class="dl-card-title">Ekstensi Browser Resmi (Chrome, Edge, Brave &amp; Firefox)</span>
+                <span class="dl-version-pill">Manifest V3</span>
+              </div>
+              <p class="dl-card-subtitle" style="margin-top:4px;">
+                Tangkap unduhan berkas otomatis sekali klik dan grab video streaming via Native Messaging IPC.
+              </p>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <a href="https://chromewebstore.google.com/detail/prism-download-manager/mmcdeiglkbfbicdjboocmhehodogilfl" target="_blank" rel="noopener" class="dl-action-btn dl-btn-dark">
+                <span>Pasang di Chrome / Firefox</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Knowledge Base (FAQ) -->
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="section-tag" data-i18n="tagFaq">Knowledge Base &amp; Tanya Jawab Teknis</div>
+      <h2 class="section-title" data-i18n="titleFaq">Jawaban Teknis Seputar Arsitektur ADM</h2>
+      <p class="section-desc" data-i18n="descFaq">
+        Penjelasan mendalam seputar cara kerja kernel, enkripsi lisensi, dan konfigurasi ekstensi browser.
+      </p>
+
+      <div class="faq-grid">
+        <div class="faq-card" onclick="this.classList.toggle('open')">
+          <div class="faq-header">
+            <span>Bagaimana cara kerja Dynamic Work-Stealing 32-segmen mencegah macet?</span>
+            <div class="faq-toggle-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+          <div class="faq-answer">
+            Pada pengunduh biasa, jika berkas dipecah 8 bagian dan segmen ke-8 tersendat karena server membatasi kecepatan, unduhan Anda akan tersangkut di 99% menunggu segmen itu selesai. Pada Audira Download Manager, algoritma work-stealing memantau seluruh thread worker; ketika worker yang cepat selesai, ia langsung mengambil setengah dari sisa byte segmen paling lambat, mengirim permintaan HTTP Range baru, dan menyelesaikan berkas bersamaan.
+          </div>
+        </div>
+
+        <div class="faq-card" onclick="this.classList.toggle('open')">
+          <div class="faq-header">
+            <span>Apa yang dimaksud dengan Zero-Copy Sparse File Pre-Allocation?</span>
+            <div class="faq-toggle-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+          <div class="faq-answer">
+            Pengunduh lama biasanya mengunduh segmen ke berkas sementara di folder temporary (%TEMP%), lalu saat unduhan mencapai 100%, sistem harus menyalin dan menggabungkan berkas tersebut (merging). Untuk berkas 20 GB, proses ini memakan waktu 3 menit dan memperpendek usia SSD. ADM menggunakan Win32 FSCTL_SET_SPARSE / Linux fallocate; berkas target langsung dibuat utuh di hard disk sejak detik pertama, dan masing-masing koneksi menulis langsung ke posisi offset aslinya tanpa fase merging.
+          </div>
+        </div>
+
+        <div class="faq-card" onclick="this.classList.toggle('open')">
+          <div class="faq-header">
+            <span>Bagaimana pengikatan lisensi ke Hardware ID (HWID) bekerja?</span>
+            <div class="faq-toggle-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+          <div class="faq-answer">
+            Lisensi Audira PRO menggunakan kombinasi hash HMAC-SHA256 dari nama pemilik, email terdaftar, masa berlaku, dan master salt kriptografi AUDIRA. Saat pertama kali diaktifkan di laptop atau PC Anda, serial key akan diikat secara unik ke Hardware ID motherboard &amp; MAC address perangkat Anda untuk mencegah pembajakan dan duplikasi kunci ilegal.
+          </div>
+        </div>
+
+        <div class="faq-card" onclick="this.classList.toggle('open')">
+          <div class="faq-header">
+            <span>Apakah aman jika komputer mati mendadak saat proses pengunduhan?</span>
+            <div class="faq-toggle-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+          <div class="faq-answer">
+            Sangat aman. Setiap blok data yang berhasil diterima diverifikasi dan dicatat status offset-nya secara instan ke basis data SQLite Write-Ahead Logging (WAL). Ketika komputer dinyalakan kembali, ADM membaca checkpoint WAL terakhir dan melanjutkan unduhan persis dari posisi byte sebelumnya tanpa merusak integritas berkas.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Precision Technical Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="brand-logo" style="margin-bottom:0.75rem;">
+            <img src="images/logo.svg" width="26" height="26" alt="Audira ADM Logo" style="border-radius:6px; flex-shrink:0;">
+            <span>AUDIRA<span class="brand-accent">DOWNLOAD</span></span>
+          </a>
+          <p>
+            Platform download manager generasi baru dengan akselerasi multi-segmen turbo berbasis kernel Rust, resiliensi crash tingkat industri, dan ekosistem terpadu AUDIRA.
+          </p>
+          <div style="margin-top:1rem; font-size:12px; color:var(--color-text-dim); line-height:1.6;">
+            Lead Architect: <b>Agus Dwi Rianto</b><br>
+            Organization: <b>Audira Multimedia Digital / Audira Sukses Mandiri</b><br>
+            Website: <a href="https://audira.my.id" target="_blank" rel="noopener" style="color:var(--color-primary); text-decoration:underline;">https://audira.my.id</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Arsitektur &amp; Fitur</h4>
+          <ul>
+            <li><a href="#features">Dynamic Work-Stealing</a></li>
+            <li><a href="#features">Zero-Copy Sparse Allocation</a></li>
+            <li><a href="#features">SQLite WAL Crash Resilience</a></li>
+            <li><a href="#features">8K HDR Video &amp; MP3 320k</a></li>
+            <li><a href="#features">Hugging Face AI Hub</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Lisensi &amp; Ekosistem</h4>
+          <ul>
+            <li><a href="#pricing">Paket Lisensi PRO</a></li>
+            <li><a href="#checker">Cek Validitas Serial Key</a></li>
+            <li><a href="admin.html">Portal Fleet &amp; Licensing</a></li>
+            <li><a href="https://wa.me/6282112001600" target="_blank" rel="noopener">WhatsApp Billing Support</a></li>
+            <li><a href="https://github.com/audira/audira-download-manager" target="_blank" rel="noopener">Repositori Kode Sumber</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 <b>Audira Download Manager (ADM)</b>. Seluruh Hak Cipta Dilindungi.
+        </div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--color-text-dim);">
+          Engine: prism-core (Rust 2021) • UI: Tauri 2 + React • HWID Bound
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js?v=2.2.0"></script>
+</body>
+</html>

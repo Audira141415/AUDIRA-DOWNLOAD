@@ -1,21 +1,85 @@
-MIT License
+AUDIRA COMMERCIAL SOFTWARE LICENSE AGREEMENT
+Version 1.1 (2026)
 
-Copyright (c) 2026 Agus Dwi R
+Copyright (c) 2026 Agus Dwi Rianto (Audira Multimedia Digital / Audira Sukses Mandiri).
+All Rights Reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Creator & Copyright Owner : Agus Dwi Rianto (AUDIRA MDA / ASM)
+Owner ID                  : AUDIRA-ORIGIN-AGUS-DWI-R
+Official Canonical URL    : https://audira.my.id
+WhatsApp Hotline          : +62 821-1200-1600
+Official Email            : support@audira.my.id / agusdwirianto@gmail.com
+Official Repository       : https://github.com/Audira141415/AUDIRA-DOWNLOAD.git
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+IMPORTANT: PLEASE READ THIS LICENSE AGREEMENT CAREFULLY BEFORE DOWNLOADING,
+INSTALLING, COPYING, OR USING THIS SOFTWARE.
 
+================================================================================
+1. PROPRIETARY SOFTWARE & COMMERCIAL RIGHTS
+================================================================================
+This software ("Audira Download Manager" / "ADM", including all associated binaries,
+desktop client applications, core Rust engines, browser extensions, central licensing
+portal, web landing page, documentation, and media assets) is proprietary software
+conceived, designed, engineered, and copyrighted by Agus Dwi Rianto (AUDIRA).
+
+This software is NOT public-domain software, and is NOT licensed under permissive
+open-source licenses (such as MIT, GPL, or Apache) in its whole commercial form,
+except for specific third-party upstream libraries referenced in THIRD_PARTY.md.
+
+================================================================================
+2. LICENSE EDITIONS & USAGE TIERS
+================================================================================
+AUDIRA grants users licenses in accordance with the following tiers:
+
+A. Community Free Edition:
+   - Permitted for personal, individual, and evaluation use.
+   - Throttled to a maximum of 6 concurrent connections per download.
+   - Basic video extraction up to 1080p resolution.
+   - Provided free of charge without commercial redistribution rights.
+
+B. Audira PRO Annual & Lifetime Editions:
+   - Full unlocked 32 simultaneous parallel turbo connections with Dynamic
+     Work-Stealing engine.
+   - Zero-Copy Sparse File NTFS/ext4 allocation (zero merging latency).
+   - High-fidelity 4K & 8K HDR video/audio extractor across 1,800+ supported sites.
+   - AI Model Hub (Hugging Face GGUF / SafeTensors direct harvester with SHA-256).
+   - Automated PC Sleep and Shutdown on task completion.
+   - Cryptographically bound to Machine Hardware ID (HWID / MachineGuid).
+   - Priority VIP developer support via WhatsApp hotline (+62 821-1200-1600).
+
+C. Enterprise & Multi-Node Cluster:
+   - Fleet license management, custom proxy rotation, and enterprise SLA contracts.
+
+================================================================================
+3. RESTRICTIONS & ANTI-TAMPER POLICY
+================================================================================
+Unless expressly authorized in writing by AUDIRA, licensees and users may NOT:
+a) Sublicense, resell, rent, redistribute, or monetize the Software or any part
+   thereof to third parties without an authorized reseller agreement.
+b) Reverse engineer, decompile, patch, disassemble, or attempt to derive the
+   proprietary cryptographic algorithms, licensing salts, or HWID validation routines.
+c) Remove, alter, or obscure any copyright notice, digital signature, watermark,
+   or brand identity of AUDIRA / Agus Dwi Rianto.
+d) Bypass, tamper with, or circumvent any license verification, quota limits,
+   or security gates enforced by the Software or the AUDIRA Central Licensing API.
+
+================================================================================
+4. COMMERCIAL ACQUISITIONS & LICENSING HOTLINE
+================================================================================
+To purchase genuine Audira PRO licenses, request commercial multi-seat vouchers,
+or partner as an authorized distributor, please contact:
+
+* Official Website : https://audira.my.id
+* WhatsApp Support : +62 821-1200-1600
+* Email            : agusdwirianto@gmail.com / support@audira.my.id
+* Founder & Owner  : Agus Dwi Rianto (Batam, Kepulauan Riau, Indonesia)
+
+================================================================================
+5. DISCLAIMER OF WARRANTIES
+================================================================================
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL AGUS
+DWI RIANTO OR AUDIRA MULTIMEDIA DIGITAL BE LIABLE FOR ANY CLAIM, DAMAGES, OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING
+FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE THEREOF.

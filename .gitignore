@@ -1,0 +1,23 @@
+/target
+**/node_modules
+**/dist
+/app/src-tauri/gen
+/app/src-tauri/target
+/extension/build
+/packaging/out
+*.prismpart
+*.admpart
+.DS_Store
+Thumbs.db
+/.vite
+*.log
+!docs/research/**/*.log
+/dist-release
+/app/src-tauri/binaries
+*.sqlite3-wal
+*.sqlite3-shm
+*.sqlite3-journal
+.system_generated/
+
+# Rendered films ship as release assets (too large for git)
+/marketing/video/*.mp4

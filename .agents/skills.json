@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "audira-download-skills",
+  "description": "Skills configuration for Audira Download Manager, inheriting all ecosystem skills from F:/AUDIRA-ALL-SKILL",
+  "inherits": "F:/AUDIRA-ALL-SKILL/.agents/skills",
+  "activeSkills": [
+    "audira-master-brain-architect",
+    "audira-all-skill-router",
+    "audira-ui-ux",
+    "ui-ux-pro-max",
+    "antislop",
+    "antislop-ui",
+    "antislop-code"
+  ]
+}
+
